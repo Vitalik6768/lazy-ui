@@ -1,6 +1,11 @@
 import './globals.css'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { Navebar } from '@/components/Navebar';
+import { SideBar } from '@/components/SideBar';
+import { Toaster } from "@/components/ui/toaster"
+import AuthProvider from '@/components/AuthProvider';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,8 +20,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AuthProvider>
+
+          <SideBar />
+
+          <Navebar />
+
+          {children}
+
+          <Toaster />
+        </AuthProvider>
+      </body>
+
     </html>
   )
 }
