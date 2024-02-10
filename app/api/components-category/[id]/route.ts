@@ -1,24 +1,31 @@
 import { empty } from "@prisma/client/runtime/library";
 import { NextResponse, NextRequest } from "next/server";
+import { getAuthSession } from "@/utils/auth";
 import { prisma } from "@/utils/prismadb";
 
 
 export const GET = async(request: NextRequest, { params }: { params: { id: string } } ) => {
       const categoryName= params.id;
-
+      const session = await getAuthSession();
+     
       if(categoryName == 'addNew'){
         return NextResponse.json({ category:null});
       }
 
-    
+
+      //Display By User
         try {
-          const user = await prisma.component.findMany({
-            where:{
-              category:categoryName
-            }
-          })
-          
-          return NextResponse.json({ category:user});
+          if(session?.user.email){
+            const user = await prisma.component.findMany({
+              where:{
+                category:categoryName,
+                userId:session?.user.email
+              }
+            })
+            
+            return NextResponse.json({ category:user});
+        
+          }
     
         } catch (error) {
           console.error("An error occurred:", error);

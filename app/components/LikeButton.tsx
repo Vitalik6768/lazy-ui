@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { Save } from 'lucide-react';
+import { Heart } from 'lucide-react';
+
 
 interface ComProps {
     id: string;
@@ -8,7 +10,7 @@ interface ComProps {
     onClick: (data: any) => void;
 }
 
-const CrudNav: FC<ComProps> = ({ id, data, onClick }) => {
+const LikeButton: FC<ComProps> = ({ id, data, onClick }) => {
     const { toast } = useToast();
 
     const updateData = async () => {
@@ -30,8 +32,8 @@ const CrudNav: FC<ComProps> = ({ id, data, onClick }) => {
     };
 
     return (
-        <Save className='text-red-500 hover:text-black m-2 transition duration-200 ease-in-out cursor-pointer' onClick={updateData} />
+        <Heart className='text-red-500 hover:text-black m-2 transition duration-200 ease-in-out cursor-pointer' onClick={updateData} />
     );
 };
 
-export default CrudNav;
+export default LikeButton;

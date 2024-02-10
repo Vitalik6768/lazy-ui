@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { useState, FC } from 'react';
 import { useToast } from "@/components/ui/use-toast";
-import { Plus, Loader2 } from 'lucide-react';
-
+import { Trash2, Loader2 } from 'lucide-react';
 
 import {
   Dialog,
@@ -16,49 +15,39 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export function AddNewComponent(props: any) {
+
+
+
+export function DeleteCategoryComponent(props:any) {
   const { toast } = useToast();
 
   const [name, setName] = useState<string | undefined>();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setName(name);
-    postData()
-
-  };
 
   const postData = async () => {
-    setLoading(true);
-
+     setLoading(true);
+  
     try {
-
-      const response = await fetch('/api/components/addnew', {
-        method: 'POST',
+      const response = await fetch(`/api/categories/${props.id}`, {
+        method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
           // 'Authorization': 'Bearer ' + YOUR_TOKEN,  // if you need to send a token
         },
-        body: JSON.stringify({ name, category: props.name, userId: props.userId }) // body data type must match "Content-Type" header
+        body: JSON.stringify({  name, category:props.name  }) // body data type must match "Content-Type" header
       });
 
       // Parsing the JSON response
       const data = await response.json();
       setLoading(false);
-
       setOpen(false);
-      props.onSubmit(data.message);
+      props.onClick(props.id);
       toast({
-        description: 'New Component Added',
+        description: 'Category Deleted',
       })
-
+      
       // Do something with the data
     } catch (error) {
       console.error('There was a problem with the fetch operation:', error);
@@ -69,34 +58,28 @@ export function AddNewComponent(props: any) {
 
 
   return (
-    <form onSubmit={handleSubmit} id="my-form1">
+    
       <Dialog open={open} onOpenChange={setOpen}>
-        <div className="flex justify-end">
+        <DialogTrigger asChild>
+        <div className="flex items-center justify-self-end">
+        <h1 className="mt-1">{props.name}</h1>
+        <Trash2 className="text-red-500 mt-3 hover:text-red-700 m-2 transition duration-200 ease-in-out cursor-pointer justify-self-end"/>
 
-          <DialogTrigger asChild>
-            <Button className="justify-self-end" variant="outline"> <Plus /> </Button>
-          </DialogTrigger>
         </div>
+        </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Create New Component</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
-            </DialogDescription>
+            <DialogTitle>Are You Sure?</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input onChange={handleChange} id="name" className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
 
             </div>
           </div>
           <DialogFooter>
-            {loading ?
+          {loading ?
               <div>
 
                 <Button disabled>
@@ -105,14 +88,12 @@ export function AddNewComponent(props: any) {
                 </Button>
               </div>
               :
-
-
-              <Button type="submit" form="my-form1" >Save changes</Button>
+              <Button onClick={postData}>DELETE</Button>
             }
 
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </form>
+    
   )
 }

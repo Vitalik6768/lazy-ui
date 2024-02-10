@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { useState, FC } from 'react';
 import { useToast } from "@/components/ui/use-toast";
-import { Trash2 } from 'lucide-react';
+import { Trash2, Loader2 } from 'lucide-react';
 
 import {
   Dialog,
@@ -23,9 +23,12 @@ export function DeleteComponent(props:any) {
 
   const [name, setName] = useState<string | undefined>();
   const [open, setOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+
 
   const postData = async () => {
-  
+    setLoading(true);
+
     try {
       const response = await fetch(`/api/components/${props.id}`, {
         method: 'DELETE',
@@ -38,6 +41,8 @@ export function DeleteComponent(props:any) {
 
       // Parsing the JSON response
       const data = await response.json();
+      setLoading(false);
+
       setOpen(false);
       props.onClick(props.id);
       toast({
@@ -71,7 +76,17 @@ export function DeleteComponent(props:any) {
             </div>
           </div>
           <DialogFooter>
+          {loading ?
+              <div>
+
+                <Button disabled>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </Button>
+              </div>
+              :
             <Button onClick={postData}>DELETE</Button>
+          }
           </DialogFooter>
         </DialogContent>
       </Dialog>

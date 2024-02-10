@@ -5,19 +5,21 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { type } from 'os';
 import { signOut, useSession } from 'next-auth/react';
+import { LogOut } from 'lucide-react';
 const db = new PrismaClient();
 
 
 
 export const UserLinks = () => {
-    const { status } = useSession()
+    const session = useSession();
 
     return (
         <div className="text-right mt-1">
-            {status === "authenticated" ? (
-                <div>
-                    <span onClick={() =>signOut()} className='mr-3 cursor-pointer' >Logout</span>
-                    <Link className="text-right mt-1" href={'/login'}>Connected</Link>
+            {session.status === "authenticated" ? (
+                <div className='flex justify-end'>
+                    <Link  href={'/'}>{session.data.user.email}</Link>
+                    <LogOut onClick={() =>signOut()} className=' ml-3 cursor-pointer'/>
+
                 </div>
             ) : (
                 <Link className="text-right mt-1" href={'/login'}>Login</Link>

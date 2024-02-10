@@ -1,10 +1,9 @@
 
-
-const { PrismaClient } = require("@prisma/client");
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { type } from 'os';
-const db = new PrismaClient();
+import { SettingsNav } from './SettingsNav';
+
+
 
 type IPost  = {
   id: number;
@@ -27,14 +26,19 @@ export const SideBar =  async () => {
   const menu : IPost[] = await getData()
   return (
     <>
-      <div className="w-48 bg-gray-800 text-white h-screen fixed">
+      <div className="w-32 bg-gray-800 text-white h-screen fixed">
         <div className="p-6">
-     
+        
         </div>
+        <div className='mt-4 ml-3'>
+        <SettingsNav/>
+        </div>
+        
         <nav className="mt-8">
+        
           <ul>
             {menu.map((category) => (
-              <Link href={'/category/' + category.name} key={category.id} className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+              <Link href={'/category/' + category.name} key={category.id} className=" cursor-pointer block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
                 {category.name}
               </Link>
 

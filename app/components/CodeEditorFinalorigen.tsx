@@ -3,15 +3,10 @@
 import { useRef, useState, FC, useEffect, createRef } from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import CroudNav from "./CroudNav";
-import { Heart } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { GptPrompt } from "./GptPrompt";
-import * as htmlToImage from 'html-to-image';
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
-import { useSession } from 'next-auth/react';
-import { Spinner } from '@/app/components/Spinner';
-
-
+import { useScreenshot, createFileName } from "use-react-screenshot";
+import html2canvas from 'html2canvas';
 
 
 
@@ -35,51 +30,46 @@ const CodeEditorFinal: FC<ComProps> = (prompts) => {
     const [gptData, setGptData] = useState<any>();
     const iframeRef = useRef<HTMLIFrameElement | null>(null);;
     const ref = createRef<HTMLDivElement>()
-    const session = useSession();
-    
+    const [image, setScreenshot] = useScreenshot({
+        type: 'image/jpeg'
+    })
 
-
-    const  takeScreenshot = (comeId:any) => {
+    const takeScreenshot = () => {
         const iframeElement = document.getElementById('screenshot');
-        const node = iframeElement as HTMLIFrameElement | null;
+        const iframe = iframeElement as HTMLIFrameElement | null;
+        const options = {
+            useCORS: true, // Use this if you need to capture external content with CORS enabled
+            // Add other options here as needed
+        };
     
-        if (node && node.contentWindow && node.contentWindow.document) {
-            const iframeContent = node.contentWindow.document;
+        if (iframe && iframe.contentWindow && iframe.contentWindow.document) {
+            const iframeContent = iframe.contentWindow.document;
     
-            htmlToImage.toBlob(iframeContent.body, {
-                backgroundColor: '#ffffff'
-            })
-            .then(function (blob) {
-                // Handling the blob object here
-                if (blob) {
-                    // console.log(comeId);
-                     uploadImage(blob, comeId)
-                }
-            })
-            .catch(function (error) {
-                console.error('oops, something went wrong!', error);
-            });
+            html2canvas(iframeContent.body, options)
+                .then((canvas,
+                ) => {
+                    const base64image = canvas.toDataURL('image/png');
+                    downloadImage(base64image); // Use the base64image for downloading
+                })
+                .catch((error) => {
+                    console.error('Error capturing iframe:', error);
+                });
+        } else {
+            console.error('Iframe content not accessible or iframe does not exist');
         }
     };
 
-    const uploadImage = async (blob:any, comeId:String) => {
-        //console.log(blob);
-        const formData = new FormData();
-        formData.append('screenshot', blob);
-    
-        try {
-            const response = await fetch(`/api/upload?id=${comeId}`, {
-                method: 'POST',
-                body: formData,
-            });
-            const result = await response.json();
-            console.log('Image uploaded successfully:', result);
-        } catch (error) {
-            console.error('Error uploading image:', error);
-        }
-    };
+    const downloadImage = (url:any) => {
 
-    
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'url';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+    };
 
     function handleEditorDidMount(editor: any, monaco: Monaco) {
         let myValue = backendData;
@@ -115,6 +105,33 @@ const CodeEditorFinal: FC<ComProps> = (prompts) => {
     }
 
 
+    async function GetData() {
+
+        setLoading(true);
+
+
+        try {
+            const response = await fetch('http://localhost:3000/api/gpt/basic/', {
+                method: 'GET',
+            });
+            // Parsing the JSON response
+            const data = await response.json();
+            let newData = `
+            <div>
+            <script src="https://cdn.tailwindcss.com"></script>
+            ${data.gpt.choices[0].message.content}
+            </div>
+            `
+            setLoading(false);
+            setBackEndData(newData)
+            setGptData(newData)
+            //setBackEndData(data.gpt.choices[0].message.content);
+            console.log(data.gpt.choices[0].message.content);
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+        }
+    }
+
     useEffect(() => {
 
         fetch('/api/components/' + prompts.name)
@@ -129,7 +146,6 @@ const CodeEditorFinal: FC<ComProps> = (prompts) => {
                 if (Array.isArray(data.component)) {
                     //console.log(data.component[0].code);
                     setBackEndData(data.component[0].code);
-
                 } else {
                     console.warn("Received data is not an array", data);
 
@@ -155,24 +171,23 @@ const CodeEditorFinal: FC<ComProps> = (prompts) => {
         const options = {
             minimap: { enabled: false, }
         };
-
         return (
             <>
-                <div className="flex justify-end">
-                    <Heart/>
+                <div>
+                    <Button onClick={GetData} className="text-right">Generate Ai Component</Button>
+                    <Button onClick={takeScreenshot} className="text-right">screen</Button>
+
+
                 </div>
                 {loading ? <p>Loading...</p> : <p></p>}
 
 
-                <div className="h-96 grid grid-cols-2 gap-4 content-center mt-8">
-                    <div className='border-r-2'>
-                    {session.status === "authenticated" && (
-
+                <div className="h-96 grid grid-cols-2 gap-4 content-center mt-10">
+                    <div className='border-2'>
                         <div className="text-left flex ">
-                            <CroudNav data={backendData} onClick={takeScreenshot} id={prompts.name} />
+                            <CroudNav data={backendData} id={prompts.name} />
                             <GptPrompt data={backendData} onSubmit={changeData} />
                         </div>
-                    )}
 
                         <Editor
                             key={gptData}
@@ -184,21 +199,12 @@ const CodeEditorFinal: FC<ComProps> = (prompts) => {
                         />
                     </div>
                  
-                        <iframe id='screenshot' className='w-full h-full' ref={iframeRef}></iframe>
+                        <iframe id='screenshot' className='border-2 w-full h-full' ref={iframeRef}></iframe>
 
                 </div>
             </>
-        
         );
-    }else{
-        return(
-            <Spinner />
-
-        )
-       
-
     }
-}
-
+};
 
 export default CodeEditorFinal;

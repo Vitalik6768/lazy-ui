@@ -24,13 +24,15 @@ export function GptPrompt(props: any) {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
+        //console.log(event.target.value);
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 
         event.preventDefault();
         setName(name);
-        postData()
+       
+       postData()
     };
     const postData = async () => {
         setLoading(true);
@@ -72,7 +74,7 @@ export function GptPrompt(props: any) {
 
 
     return (
-        <form onSubmit={handleSubmit} id="my-form">
+        <form onSubmit={handleSubmit} id="my-form22">
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                     <Bot className="mt-2 hover:text-red-500 m-2 transition duration-200 ease-in-out cursor-pointer" />
@@ -104,7 +106,7 @@ export function GptPrompt(props: any) {
                             </div>
                         }
 
-                        <Button type="submit" form="my-form" >Make Changes</Button>
+                        <Button type="submit" form="my-form22" >Make Changes</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

@@ -1,8 +1,9 @@
-import { Button } from "@/components/ui/button"
-import { useState, FC } from 'react';
-import { useToast } from "@/components/ui/use-toast";
-import { Plus, Loader2 } from 'lucide-react';
+"use client"
 
+import { useState, FC } from 'react';
+import { Settings, Loader2 } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast";
 
 import {
   Dialog,
@@ -13,50 +14,53 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export function AddNewComponent(props: any) {
-  const { toast } = useToast();
 
+
+export function SettingsNav() {
   const [name, setName] = useState<string | undefined>();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { toast } = useToast();
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
-
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    console.log('ok');
+
     event.preventDefault();
     setName(name);
     postData()
-
   };
 
   const postData = async () => {
     setLoading(true);
 
     try {
-
-      const response = await fetch('/api/components/addnew', {
+      const response = await fetch('/api/categories/4/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           // 'Authorization': 'Bearer ' + YOUR_TOKEN,  // if you need to send a token
         },
-        body: JSON.stringify({ name, category: props.name, userId: props.userId }) // body data type must match "Content-Type" header
+        body: JSON.stringify({ name }) // body data type must match "Content-Type" header
       });
 
       // Parsing the JSON response
       const data = await response.json();
       setLoading(false);
 
+      //setData(data);
+
       setOpen(false);
-      props.onSubmit(data.message);
       toast({
-        description: 'New Component Added',
+        description: 'New Category Added Please Refresh The Page',
       })
 
       // Do something with the data
@@ -69,31 +73,29 @@ export function AddNewComponent(props: any) {
 
 
   return (
-    <form onSubmit={handleSubmit} id="my-form1">
+    <form onSubmit={handleSubmit} id="my-form">
       <Dialog open={open} onOpenChange={setOpen}>
-        <div className="flex justify-end">
+        <DialogTrigger asChild><h1 className="block py-2.5 cursor-pointer">Add New</h1></DialogTrigger>
 
-          <DialogTrigger asChild>
-            <Button className="justify-self-end" variant="outline"> <Plus /> </Button>
-          </DialogTrigger>
-        </div>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Create New Component</DialogTitle>
+            <DialogTitle>Add New Category</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right">
-                Name
+                Category Name
               </Label>
-              <Input onChange={handleChange} id="name" className="col-span-3" />
+              <Input
+                onChange={handleChange}
+                id="name"
+                defaultValue="Pedro Duarte"
+                className="col-span-3"
+              />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
 
-            </div>
           </div>
           <DialogFooter>
             {loading ?
@@ -106,13 +108,12 @@ export function AddNewComponent(props: any) {
               </div>
               :
 
-
-              <Button type="submit" form="my-form1" >Save changes</Button>
+              <Button type="submit" form="my-form">Save changes</Button>
             }
-
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </form>
+
   )
 }
