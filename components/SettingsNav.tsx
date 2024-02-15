@@ -4,6 +4,7 @@ import { useState, FC } from 'react';
 import { Settings, Loader2 } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast";
+const { routh } = require('@/utils/rouths')
 
 import {
   Dialog,
@@ -43,7 +44,7 @@ export function SettingsNav() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/categories/4/', {
+      const response = await fetch(`${routh}/api/categories/4/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { useState, FC } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { Plus, Loader2 } from 'lucide-react';
+const { routh } = require('@/utils/rouths')
 
 
 import {
@@ -40,7 +41,7 @@ export function AddNewComponent(props: any) {
 
     try {
 
-      const response = await fetch('/api/components/addnew', {
+      const response = await fetch(`${routh}/api/components/addnew`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

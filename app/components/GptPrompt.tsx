@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+const { routh } = require('@/utils/rouths')
 import { useState, FC } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { Bot } from 'lucide-react';
@@ -44,7 +45,7 @@ export function GptPrompt(props: any) {
         console.log(code);
 
         try {
-            const response = await fetch('/api/gpt/basic', {
+            const response = await fetch(`${routh}/api/gpt/basic`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

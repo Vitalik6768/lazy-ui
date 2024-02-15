@@ -12,7 +12,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Skeleton } from "@/components/ui/skeleton"
 import { useSession } from 'next-auth/react';
+const { routh } = require('@/utils/rouths')
 
+
+//require("dotenv").config();
 
 interface IComponent {
   id: string;
@@ -42,10 +45,9 @@ const Category = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/components-category/${id}`)
+    fetch(`${routh}/api/components-category/${id}`)
       .then(response => {
         if (response.ok) {
-
           return response.json();
         } else {
           throw new Error('Failed to fetch');
@@ -98,6 +100,7 @@ const Category = () => {
               {session.status === "authenticated" && (
 
                 <div className="grid grid-cols-2 mb-4">
+                  
                   <AddNewComponent onSubmit={NewComponentAdded} name={id} userId={session.data?.user.email} />
                   <DeleteCategoryComponent onClick={DeleteCategory} name={id} />
 

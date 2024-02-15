@@ -10,6 +10,7 @@ import * as htmlToImage from 'html-to-image';
 import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 import { useSession } from 'next-auth/react';
 import { Spinner } from '@/app/components/Spinner';
+const { routh } = require('@/utils/rouths')
 
 
 
@@ -68,7 +69,7 @@ const CodeEditorFinal: FC<ComProps> = (prompts) => {
         formData.append('screenshot', blob);
     
         try {
-            const response = await fetch(`/api/upload?id=${comeId}`, {
+            const response = await fetch(`${routh}/api/upload?id=${comeId}`, {
                 method: 'POST',
                 body: formData,
             });
@@ -117,7 +118,7 @@ const CodeEditorFinal: FC<ComProps> = (prompts) => {
 
     useEffect(() => {
 
-        fetch('/api/components/' + prompts.name)
+        fetch(`${routh}/api/components/` + prompts.name)
             .then(response => {
                 if (response.ok) {
                     return response.json();

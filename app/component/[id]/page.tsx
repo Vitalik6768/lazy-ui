@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { Spinner } from '@/app/components/Spinner';
 import CodeEditorFinal from '@/app/components/CodeEditorFinal';
 
+
 export default function Component() {
   const params = useParams();
   const id = params.id;

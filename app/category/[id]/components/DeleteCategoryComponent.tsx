@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button"
 import { useState, FC } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { Trash2, Loader2 } from 'lucide-react';
+const { routh } = require('@/utils/rouths')
+
 
 import {
   Dialog,
@@ -30,7 +32,7 @@ export function DeleteCategoryComponent(props:any) {
      setLoading(true);
   
     try {
-      const response = await fetch(`/api/categories/${props.id}`, {
+      const response = await fetch(`${routh}/api/categories/${props.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

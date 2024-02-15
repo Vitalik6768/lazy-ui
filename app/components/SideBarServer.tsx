@@ -3,6 +3,7 @@
 const { PrismaClient } = require("@prisma/client");
 import { useState, useEffect } from 'react';
 const db = new PrismaClient();
+const { routh } = require('@/utils/rouths')
 
 
 interface IPost {
@@ -11,7 +12,7 @@ interface IPost {
 }
 
 async function getData(){
-  const res = await fetch('/api/categories')
+  const res = await fetch(`${routh}/api/categories`)
   
   
   return res.json()

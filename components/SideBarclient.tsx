@@ -4,6 +4,7 @@ const { PrismaClient } = require("@prisma/client");
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 const db = new PrismaClient();
+const { routh } = require('@/utils/rouths')
 
 
 interface IPost {
@@ -19,7 +20,7 @@ export const SideBar = () => {
 
 
   useEffect(() => {
-    fetch('/api/categories')
+    fetch(`${routh}/api/categories`)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -51,7 +52,7 @@ export const SideBar = () => {
         <nav className="mt-8">
           <ul>
             {backendData.map((category: IPost) => (
-              <Link href={'/category/' + category.name} key={category.id} className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+              <Link href={`${routh}/category/` + category.name} key={category.id} className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
                 {category.name}
               </Link>
 

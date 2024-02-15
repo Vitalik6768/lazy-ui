@@ -11,7 +11,7 @@ interface OpenAIConfig {
 }
 
 const openai = new OpenAI({
-  apiKey: process.env.KEY as string,
+  apiKey: process.env.OPENAI_API_KEY as string,
 } as OpenAIConfig);
 
 

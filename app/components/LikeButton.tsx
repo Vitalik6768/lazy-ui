@@ -1,4 +1,5 @@
 import { FC } from 'react';
+const { routh } = require('@/utils/rouths')
 import { useToast } from "@/components/ui/use-toast";
 import { Save } from 'lucide-react';
 import { Heart } from 'lucide-react';
@@ -20,7 +21,7 @@ const LikeButton: FC<ComProps> = ({ id, data, onClick }) => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ code: data })
             };
-            const response = await fetch(`/api/components/${id}`, requestOptions);
+            const response = await fetch(`${routh}/api/components/${id}`, requestOptions);
             const responseData = await response.json();
             console.log(responseData);
             onClick(id);

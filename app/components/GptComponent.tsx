@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react';
+const { routh } = require('@/utils/rouths')
 const GenerateComponent = () => {
 
   const [promp, setPrompt] = useState<string | undefined>();
@@ -18,7 +19,7 @@ const GenerateComponent = () => {
   const getData = async () => {
     SetLoading(true);
     try {
-      const response = await fetch('/api/prompts', {
+      const response = await fetch(`${routh}/api/prompts`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

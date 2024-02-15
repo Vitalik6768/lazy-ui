@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { type } from 'os';
 import { SettingsNav } from './SettingsNav';
+const { routh } = require('@/utils/rouths')
 
 
 
@@ -11,7 +12,7 @@ type IPost  = {
   
 }
 const getData = async ()=>{
-  const res = await fetch("http://localhost:3000/api/categories",{
+  const res = await fetch(`${routh}/api/categories`,{
     cache:"no-store"
   })
 
@@ -38,7 +39,7 @@ export const SideBar =  async () => {
         
           <ul>
             {menu.map((category) => (
-              <Link href={'/category/' + category.name} key={category.id} className=" cursor-pointer block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+              <Link href={`${routh}/category/` + category.name} key={category.id} className=" cursor-pointer block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
                 {category.name}
               </Link>
 

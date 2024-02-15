@@ -4,6 +4,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/utils/prismadb";
 
 
+
 export const POST = async (request: NextRequest) => {
 
   const res = await request.json()

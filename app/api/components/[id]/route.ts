@@ -6,6 +6,7 @@ import { prisma } from "@/utils/prismadb";
 
 
 
+
 export const GET = async(request: NextRequest, { params }: { params: { id: string } } ) => {
 
   const componentId= params.id
