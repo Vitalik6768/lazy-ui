@@ -45,7 +45,7 @@ const Category = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${routh}/api/components-category/${id}`)
+    fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/components-category/${id}`)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -84,7 +84,10 @@ const Category = () => {
     router.push('/');
   }
 
-
+ 
+  if(!process.env.NEXT_PUBLIC_BASE_API_URL){
+    return null
+  }
 
   return (
     <>

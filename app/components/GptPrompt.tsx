@@ -45,7 +45,7 @@ export function GptPrompt(props: any) {
         console.log(code);
 
         try {
-            const response = await fetch(`${routh}/api/gpt/basic`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/gpt/basic`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -72,7 +72,9 @@ export function GptPrompt(props: any) {
     };
 
 
-
+    if(!process.env.NEXT_PUBLIC_BASE_API_URL){
+        return null
+      }
 
     return (
         <form onSubmit={handleSubmit} id="my-form22">

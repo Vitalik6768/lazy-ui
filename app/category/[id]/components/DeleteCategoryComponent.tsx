@@ -32,7 +32,7 @@ export function DeleteCategoryComponent(props:any) {
      setLoading(true);
   
     try {
-      const response = await fetch(`${routh}/api/categories/${props.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/categories/${props.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -57,7 +57,9 @@ export function DeleteCategoryComponent(props:any) {
   };
 
 
-
+  if(!process.env.NEXT_PUBLIC_BASE_API_URL){
+    return null
+  }
 
   return (
     

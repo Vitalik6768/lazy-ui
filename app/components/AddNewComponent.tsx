@@ -41,7 +41,7 @@ export function AddNewComponent(props: any) {
 
     try {
 
-      const response = await fetch(`${routh}/api/components/addnew`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/components/addnew`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,9 @@ export function AddNewComponent(props: any) {
   };
 
 
-
+  if(!process.env.NEXT_PUBLIC_BASE_API_URL){
+    return null
+  }
 
   return (
     <form onSubmit={handleSubmit} id="my-form1">

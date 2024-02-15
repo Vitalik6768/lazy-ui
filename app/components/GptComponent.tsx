@@ -19,7 +19,7 @@ const GenerateComponent = () => {
   const getData = async () => {
     SetLoading(true);
     try {
-      const response = await fetch(`${routh}/api/prompts`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/prompts`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -38,7 +38,9 @@ const GenerateComponent = () => {
   };
 
 
-
+  if(!process.env.NEXT_PUBLIC_BASE_API_URL){
+    return null
+  }
 
     return(
     

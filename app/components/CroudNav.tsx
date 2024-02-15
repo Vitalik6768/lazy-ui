@@ -20,7 +20,7 @@ const CrudNav: FC<ComProps> = ({ id, data, onClick }) => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ code: data })
             };
-            const response = await fetch(`${routh}/api/components/${id}`, requestOptions);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/components/${id}`, requestOptions);
             const responseData = await response.json();
             console.log(responseData);
             onClick(id);
@@ -30,6 +30,10 @@ const CrudNav: FC<ComProps> = ({ id, data, onClick }) => {
             // Handle error appropriately
         }
     };
+
+    if(!process.env.NEXT_PUBLIC_BASE_API_URL){
+        return null
+      }
 
     return (
         <Save className='text-red-500 hover:text-black m-2 transition duration-200 ease-in-out cursor-pointer' onClick={updateData} />

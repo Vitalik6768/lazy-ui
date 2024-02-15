@@ -69,7 +69,7 @@ const CodeEditorFinal: FC<ComProps> = (prompts) => {
         formData.append('screenshot', blob);
     
         try {
-            const response = await fetch(`${routh}/api/upload?id=${comeId}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/upload?id=${comeId}`, {
                 method: 'POST',
                 body: formData,
             });
@@ -118,7 +118,7 @@ const CodeEditorFinal: FC<ComProps> = (prompts) => {
 
     useEffect(() => {
 
-        fetch(`${routh}/api/components/` + prompts.name)
+        fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/components/` + prompts.name)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -151,6 +151,9 @@ const CodeEditorFinal: FC<ComProps> = (prompts) => {
     }
 
 
+    if(!process.env.NEXT_PUBLIC_BASE_API_URL){
+        return null
+      }
 
     if (backendData) {
         const options = {

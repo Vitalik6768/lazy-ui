@@ -44,7 +44,7 @@ export function SettingsNav() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${routh}/api/categories/4/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/categories/4/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +70,9 @@ export function SettingsNav() {
     }
   };
 
-
+  if(!process.env.NEXT_PUBLIC_BASE_API_URL){
+    return null
+  }
 
 
   return (

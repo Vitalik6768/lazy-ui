@@ -20,7 +20,7 @@ export const SideBar = () => {
 
 
   useEffect(() => {
-    fetch(`${routh}/api/categories`)
+    fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/categories`)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -42,6 +42,10 @@ export const SideBar = () => {
         setLoading(false);
       });
   }, []);
+
+  if(!process.env.NEXT_PUBLIC_BASE_API_URL){
+    return null
+  }
 
   return (
     <>

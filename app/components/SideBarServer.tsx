@@ -12,7 +12,7 @@ interface IPost {
 }
 
 async function getData(){
-  const res = await fetch(`${routh}/api/categories`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/categories`)
   
   
   return res.json()
@@ -24,7 +24,9 @@ export const SideBarServer = async () => {
  
 
 
-  
+  if(!process.env.NEXT_PUBLIC_BASE_API_URL){
+    return null
+  }
 
   return (
     <>
