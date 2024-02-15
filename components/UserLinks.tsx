@@ -26,7 +26,7 @@ export const UserLinks = () => {
 
                 </div>
             ) : (
-                <Link className="text-right mt-1" href={'/login'}>Login</Link>
+                <Link className="text-right mt-1" href={`${process.env.NEXT_PUBLIC_BASE_API_URL}/login`}>Login</Link>
             )}
         </div>
     );

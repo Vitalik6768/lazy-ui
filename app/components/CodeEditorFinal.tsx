@@ -118,6 +118,10 @@ const CodeEditorFinal: FC<ComProps> = (prompts) => {
 
     useEffect(() => {
 
+        if(process.env.NEXT_PUBLIC_BASE_API_URL){
+
+        
+
         fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/components/` + prompts.name)
             .then(response => {
                 if (response.ok) {
@@ -141,6 +145,7 @@ const CodeEditorFinal: FC<ComProps> = (prompts) => {
                 console.log(error);
 
             });
+        }
 
     }, []);
 

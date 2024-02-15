@@ -44,6 +44,8 @@ const Category = () => {
 
 
   useEffect(() => {
+    if(process.env.NEXT_PUBLIC_BASE_API_URL){
+    
     setLoading(true);
     fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/components-category/${id}`)
       .then(response => {
@@ -71,6 +73,8 @@ const Category = () => {
         setError(error);
         setLoading(false);
       });
+      
+    }
   }, [newComponent]);
 
 
@@ -81,7 +85,7 @@ const Category = () => {
   const DeleteCategory = () => {
 
     console.log("category deleted")
-    router.push('/');
+    router.push(`${process.env.NEXT_PUBLIC_BASE_API_URL}`);
   }
 
  
