@@ -23,8 +23,7 @@ export async function POST(request: NextRequest) {
   const buffer = Buffer.from(await file.arrayBuffer());
   //const relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
   const relativeUploadDir = `/uploads/`;
-  const uploadDir = join(process.cwd(), relativeUploadDir);
-  //const uploadDir = join(process.cwd(), "public", relativeUploadDir);
+  const uploadDir = join(process.cwd(), "public", relativeUploadDir);
 
 
 
