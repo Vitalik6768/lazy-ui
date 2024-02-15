@@ -4,7 +4,7 @@ import { type } from 'os';
 import { SettingsNav } from './SettingsNav';
 const { routh } = require('@/utils/rouths')
 
-
+//
 
 type IPost = {
   id: number;
