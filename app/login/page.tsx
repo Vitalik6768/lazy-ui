@@ -19,12 +19,15 @@ const LoginPage = () => {
     }
 
     if(status == "authenticated"){
-        router.push("/")
+        router.push(`${process.env.NEXT_PUBLIC_BASE_API_URL}`)
     }
 
 
 
 
+ if(!process.env.NEXT_PUBLIC_BASE_API_URL){
+        return null
+      }
 
     return (
         <div className="flex">

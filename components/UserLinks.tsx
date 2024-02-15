@@ -12,12 +12,16 @@ const db = new PrismaClient();
 
 export const UserLinks = () => {
     const session = useSession();
+    
+    if(!process.env.NEXT_PUBLIC_BASE_API_URL){
+        return null
+      }
 
     return (
         <div className="text-right mt-1">
             {session.status === "authenticated" ? (
                 <div className='flex justify-end'>
-                    <Link  href={'/'}>{session.data.user.email}</Link>
+                    <Link  href={`${process.env.NEXT_PUBLIC_BASE_API_URL}`}>{session.data.user.email}</Link>
                     <LogOut onClick={() =>signOut()} className=' ml-3 cursor-pointer'/>
 
                 </div>

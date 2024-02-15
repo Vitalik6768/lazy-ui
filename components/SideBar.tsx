@@ -12,7 +12,7 @@ type IPost  = {
   
 }
 const getData = async ()=>{
-  const res = await fetch(`${routh}/api/categories`,{
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/categories`,{
     cache:"no-store"
   })
 
