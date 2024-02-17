@@ -50,6 +50,7 @@ export const SideBarClient = () => {
 
   const categoryChange = (newData: any) =>{
     setMenuUpdate(newData);
+    console.log(newData);
 
   }
 
