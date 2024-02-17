@@ -37,7 +37,7 @@ export const SideBarClient = () => {
         }
       })
       .then(data => {
-       // console.log(data);
+        console.log(data);
         setBackEndData(data);
         setLoading(false);
       })
