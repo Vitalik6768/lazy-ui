@@ -29,6 +29,7 @@ export const SideBarClient = () => {
     fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/categories`)
       .then(response => {
         if (response.ok) {
+          console.log(response);
           
           return response.json();
         } else {
@@ -36,7 +37,7 @@ export const SideBarClient = () => {
         }
       })
       .then(data => {
-        console.log(data);
+       // console.log(data);
         setBackEndData(data);
         setLoading(false);
       })
@@ -50,7 +51,7 @@ export const SideBarClient = () => {
 
   const categoryChange = (newData: any) =>{
     setMenuUpdate(newData);
-    console.log(newData);
+    //console.log(newData);
 
   }
 
