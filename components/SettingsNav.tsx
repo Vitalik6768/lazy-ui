@@ -21,7 +21,7 @@ import { Label } from "@/components/ui/label"
 
 
 
-export function SettingsNav() {
+export function SettingsNav(props: any) {
   const [name, setName] = useState<string | undefined>();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -55,6 +55,8 @@ export function SettingsNav() {
 
       // Parsing the JSON response
       const data = await response.json();
+      props.onSubmit(name);
+
       setLoading(false);
 
       //setData(data);

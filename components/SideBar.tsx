@@ -4,7 +4,7 @@ import { type } from 'os';
 import { SettingsNav } from './SettingsNav';
 const { routh } = require('@/utils/rouths')
 
-//
+////
 
 type IPost = {
   id: number;
@@ -27,11 +27,14 @@ const getData = async () => {
 export const SideBar = async () => {
 
   const menu: IPost[] = await getData()
+  
+
 
 
   if (!process.env.NEXT_PUBLIC_BASE_API_URL) {
     return null
   }
+  
   return (
     <>
       <div className="w-32 bg-gray-800 text-white h-screen fixed">
@@ -39,7 +42,9 @@ export const SideBar = async () => {
 
         </div>
         <div className='mt-4 ml-3'>
-          <SettingsNav />
+
+
+         
         </div>
 
         <nav className="mt-8">
