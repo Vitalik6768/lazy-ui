@@ -90,3 +90,9 @@ model Chat {
   createdAt  DateTime  @default(now())
   tokens     Int
 }
+
+
+model Tipi {
+  id         String  @id @default(cuid())
+  name   String
+}

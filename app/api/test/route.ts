@@ -1,18 +1,13 @@
 import { NextResponse } from "next/server";
 
-// const { PrismaClient } = require("@prisma/client");
-// const db = new PrismaClient();
-
-
-
 import { prisma } from "@/utils/prismadb";
 
 export const GET = async() => {
   
-//hjhjghj
+
 
         try {
-          const category = await prisma.category.findMany()
+          const category = await prisma.tipi.findMany()
          // console.log(category);
           
           return NextResponse.json(category);
