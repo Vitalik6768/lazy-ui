@@ -48,7 +48,7 @@ export const GET = async() => {
           const category = await prisma.tipi.findMany()
          // console.log(category);
           
-          return NextResponse.json(category);
+          return NextResponse.json({category});
     
         } catch (error) {
           console.error("An error occurred:", error);
