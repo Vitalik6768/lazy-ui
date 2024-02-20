@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 // const db = new PrismaClient();
 
 
+
 import { prisma } from "@/utils/prismadb";
 
 export const GET = async() => {

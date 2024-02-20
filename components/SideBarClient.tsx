@@ -59,7 +59,10 @@ export const SideBarClient = () => {
 
   const testRequest = () => {
 
-    fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/categories`)
+    fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/categories`,{
+      cache: 'no-store',
+    })
+
       .then(response => {
         if (response.ok) {
           console.log(response);
