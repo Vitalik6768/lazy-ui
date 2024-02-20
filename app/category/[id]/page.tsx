@@ -57,7 +57,6 @@ const Category = () => {
       })
       .then(data => {
         if (Array.isArray(data.category)) {
-          console.log(data.category)
           console.log(session);
           setBackEndData(data.category)
           setLoading(false);
@@ -88,29 +87,6 @@ const Category = () => {
     router.push(`${process.env.NEXT_PUBLIC_BASE_API_URL}`);
   }
 
-  const testRequest = () => {
-
-    fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/categories`)
-      .then(response => {
-        if (response.ok) {
-          console.log(response);
-
-          return response.json();
-        } else {
-          throw new Error('Failed to fetch');
-        }
-      })
-      .then(data => {
-        console.log(data);
-
-      })
-      .catch(error => {
-
-      });
-
-
-
-  }
 
  
   if(!process.env.NEXT_PUBLIC_BASE_API_URL){
@@ -134,7 +110,7 @@ const Category = () => {
                   
                   <AddNewComponent onSubmit={NewComponentAdded} name={id} userId={session.data?.user.email} />
                   <DeleteCategoryComponent onClick={DeleteCategory} name={id} />
-                  <Button onClick={testRequest} >fgdfg</Button>
+             
 
 
                 </div>
