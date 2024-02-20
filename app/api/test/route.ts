@@ -9,6 +9,7 @@ import { prisma } from "@/utils/prismadb";
 
 export const GET = async() => {
   
+//hjhjghj
 
         try {
           const category = await prisma.category.findMany()
