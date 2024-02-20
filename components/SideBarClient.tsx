@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { SettingsNav } from './SettingsNav';
 import { useSession } from 'next-auth/react';
+import { Button } from './ui/button';
 
 
 
@@ -23,14 +24,46 @@ export const SideBarClient = () => {
 
 
   useEffect(() => {
-    if(process.env.NEXT_PUBLIC_BASE_API_URL){
+    if (process.env.NEXT_PUBLIC_BASE_API_URL) {
 
-    
+
+      fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/categories`)
+        .then(response => {
+          if (response.ok) {
+            console.log(response);
+
+            return response.json();
+          } else {
+            throw new Error('Failed to fetch');
+          }
+        })
+        .then(data => {
+          console.log(data);
+          setBackEndData(data);
+          setLoading(false);
+        })
+        .catch(error => {
+          setError(error);
+          setLoading(false);
+        });
+
+    }
+  }, [menuUpdate]);
+
+  const categoryChange = (newData: any) => {
+    setMenuUpdate(newData);
+    //console.log(newData);
+
+  }
+
+
+  const testRequest = () => {
+
     fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/categories`)
       .then(response => {
         if (response.ok) {
           console.log(response);
-          
+
           return response.json();
         } else {
           throw new Error('Failed to fetch');
@@ -46,16 +79,13 @@ export const SideBarClient = () => {
         setLoading(false);
       });
 
-    }
-  }, [menuUpdate]);
 
-  const categoryChange = (newData: any) =>{
-    setMenuUpdate(newData);
-    //console.log(newData);
 
   }
 
-  if(!process.env.NEXT_PUBLIC_BASE_API_URL){
+
+
+  if (!process.env.NEXT_PUBLIC_BASE_API_URL) {
     return null
   }
 
@@ -63,12 +93,15 @@ export const SideBarClient = () => {
     <>
       <div className="w-32 bg-gray-800 text-white h-screen fixed">
         <div className="p-6">
-     
+
         </div>
         <div className='mt-4 ml-3'>
-        {session.status === "authenticated" && (
-          <SettingsNav onSubmit={categoryChange} />
-        )}
+          {session.status === "authenticated" && (
+            <SettingsNav onSubmit={categoryChange} />
+            
+
+          )}
+          <Button onClick={testRequest} />
         </div>
         <nav className="mt-8">
           <ul>
