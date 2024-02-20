@@ -4,6 +4,7 @@ import { getAuthSession } from "@/utils/auth";
 import { prisma } from "@/utils/prismadb";
 
 
+
 export const GET = async(request: NextRequest, { params }: { params: { id: string } } ) => {
       const categoryName= params.id;
       const session = await getAuthSession();
