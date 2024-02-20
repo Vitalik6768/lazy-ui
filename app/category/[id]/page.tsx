@@ -13,7 +13,7 @@ import Image from 'next/image';
 import { Skeleton } from "@/components/ui/skeleton"
 import { useSession } from 'next-auth/react';
 const { routh } = require('@/utils/rouths')
-
+import { Button } from '@/components/ui/button';
 
 //require("dotenv").config();
 
@@ -88,6 +88,30 @@ const Category = () => {
     router.push(`${process.env.NEXT_PUBLIC_BASE_API_URL}`);
   }
 
+  const testRequest = () => {
+
+    fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/categories`)
+      .then(response => {
+        if (response.ok) {
+          console.log(response);
+
+          return response.json();
+        } else {
+          throw new Error('Failed to fetch');
+        }
+      })
+      .then(data => {
+        console.log(data);
+
+      })
+      .catch(error => {
+
+      });
+
+
+
+  }
+
  
   if(!process.env.NEXT_PUBLIC_BASE_API_URL){
     return null
@@ -110,6 +134,8 @@ const Category = () => {
                   
                   <AddNewComponent onSubmit={NewComponentAdded} name={id} userId={session.data?.user.email} />
                   <DeleteCategoryComponent onClick={DeleteCategory} name={id} />
+                  <Button onClick={testRequest} >fgdfg</Button>
+
 
                 </div>
               )}
