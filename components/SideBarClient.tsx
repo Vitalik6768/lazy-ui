@@ -5,8 +5,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { SettingsNav } from './SettingsNav';
 import { useSession } from 'next-auth/react';
-import { Button } from './ui/button';
-
 
 
 interface IPost {
@@ -57,32 +55,7 @@ export const SideBarClient = () => {
   }
 
 
-  const testRequest = () => {
-
-    fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/categories`,{
-      cache: 'no-store',
-    })
-
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Failed to fetch');
-        }
-      })
-      .then(data => {
-        console.log(data);
-        setBackEndData(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError(error);
-        setLoading(false);
-      });
-
-
-
-  }
+  
 
 
 
@@ -102,7 +75,6 @@ export const SideBarClient = () => {
             
 
           )}
-          <Button onClick={testRequest} />
         </div>
         <nav className="mt-8">
           <ul>

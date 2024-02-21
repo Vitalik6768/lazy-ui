@@ -5,6 +5,7 @@ import { prisma } from "@/utils/prismadb";
 
 
 
+export const dynamic = 'force-dynamic';
 
 export const POST = async (request: NextRequest) => {
 
