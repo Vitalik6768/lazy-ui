@@ -1,4 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tailwind CSS Custom Component Generator
+
+A tool designed for frontend developers to easily generate custom Tailwind CSS components, similar to CodePen. Users can preview their code and make real-time changes, with the added functionality of using ChatGPT to edit and generate code dynamically via prompts.
+
+## Features
+- **Real-Time Preview**: Users can write and edit Tailwind CSS code and see live previews of their changes.
+- **Custom Component Generation**: Quickly generate custom Tailwind CSS components with ease.
+- **ChatGPT Integration**: Users can leverage ChatGPT to edit and generate their code in real-time using prompts, streamlining their development process.
+
+## Tech Stack
+- **Frontend**: Next.js
+- **Backend**: Prisma
+- **Authentication**: NextAuth
+- **Styling**: Tailwind CSS
+- **Language**: TypeScript
+
+
+
+
+
+
+
+
 
 ## Getting Started
 
